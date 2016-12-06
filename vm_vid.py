@@ -12,10 +12,10 @@
 # better sensitivity in low light
 # video file has metadata with rotate; video flip often means recoding
 import os,glob,subprocess;
-execfile(v.q+'vm0.py')
+from vm0 import *
 
-fnm0='/usr/bin/ffmpeg' if sys.platform.lower()[:3]=='lin' else 'C:/Programs/auVideo/videoConverter_Total/ffmpeg.exe'; # fnm00='D:/scan0/cam/ffmpeg/bin/ffmpeg.exe'
-
+v=lambda:None; v.q,v.sy=('/mnt/hgfs/D/py/','lin') if sys.platform.lower()[:3]=='lin' else ('D:/scan0/py/','win');
+fnm0='/usr/bin/ffmpeg' if sys.platform.lower()[:3]=='lin' else'C:/Programs/auVideo/videoConverter_Total/ffmpeg.exe'; # fnm00='D:/scan0/cam/ffmpeg/bin/ffmpeg.exe'
 def vid_get_prop(fnm): # h,w,fps,xx
   o1=sh(fnm0+' -i '+fnm); k=o1.find('Video:'); assert -1<k; o=o1[k:].split('\n')[0].split(', '); o[-1]=o[-1].replace(' (default)','').replace('\r','');
   o=o if len(o)==9 else o[:3]+o[2:] if len(o)==8 else o[:3]+o[2:3]+o[2:]; print o # , len(o)
@@ -32,17 +32,17 @@ def vid_split(fnm,t): # vid_split(dir2+'20150613_0927_2103.mp4','04:48:40')
 
 def vid_merge(fnm_list,fnm_out,A='-c:v copy -c:a copy'):
   fnm_list=fnm_list if isinstance(fnm_list,list) else [fnm_list]; n=len(fnm_list);
-  if 1 and 1<n:
+  if 0 and 1<n:
     o2=vid_get_prop(fnm_list[0]);
     for fnm in fnm_list[1:]:
       try:  assert vid_get_prop(fnm)==o2; # [480, 640, 100, 'MJPG', o2];
       except: print 'bad vid format in '+fnm; # assert 0;
   if 1<n:
-    fnm1=v.q+fnm_tmp(); fd=open(fnm1,'w'); [fd.write('file \''+q+'\'\n') for q in fnm_list]; fd.close();
+    fnm1=v.q+fnmT(); fd=open(fnm1,'w'); [fd.write('file \''+q+'\'\n') for q in fnm_list]; fd.close();
     fnm1=fnm1 if v.sy=='lin' else fnm1.replace('/','\\');
     o=' -f concat -safe 0 -i '+ fnm1;
   else:
-    o=' -i '+fnm_list[0]+' -safe 0'; o=' -fflags +genpts'+o
+    o=' -i '+fnm_list[0]+' -safe 0'; # o=' -fflags +genpts'+o
   cmd=fnm0+o+' '+A+' '+fnm_out; print cmd; subprocess.call(cmd)
   if 1<n: os.remove(fnm1)
 

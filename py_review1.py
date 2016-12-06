@@ -82,8 +82,33 @@ inspect.stack(),formatargvalues(getargvalues(frm)) # inspect.stack() base at [-1
 
 #--- 08 github --------------------------------------------------------------------------------------------------------
 # sudo apt-get install git; cd ~/D/py/; git init;
+# git config --global user.name 'vm'; git config --global user.email 'vadim.moroz@gmail.com'; git config --global color.ui 'auto'
+# git add *.py;
+# git mv fnm1 fnm2
+# git rm --cached fnm.py # stop tracking
+# git commit -m "msg" # spaces in comment crash it
+# git diff; git -a commit -m "msg" (or 'git add -u')
+# git log; git show <hash> # shows changed files etc
 
-git config --global user.name 'vm'; git config --global user.email 'vadim.moroz@gmail.com'; git config --global color.ui 'auto'
+### checkout: how to restore old vers
+
+### how to manage branches (split,merge etc)
+
+#---
+# git remote add origin2 ssh://vmoroz2@github.com/try1
+
+# git remote add origin2 https://github.com/vmoroz2/try1.git
+# git push -f origin2 master
+# git push -u github_vmoroz2 master # breaks?
+curl -u 'USER' https://api.github.com/user/repos -d '{"name":"REPO"}
+# branch (allow to evolve ver1, ver2 at same time)/fetch/pull (=fetch+merge,chg_remote into local)
+
+# git clone https://github.com/vmoroz2/try1 # load from web; fails on vmware_shared_dir and nonempty dir
+
+ssh-keygen
+ssh-copy-id -i ~/.ssh/id_rsa vmoroz2@github.com
+git config github.com git@github.com:vmoroz2/try1.git
+
 
 # %pastebin:
 import numpy as np; A=np.random.random((3,4));
@@ -99,8 +124,9 @@ import numpy as np; A=np.random.random((3,4));
 
 # git 
 
-# source control slang: commit='put in';
-
+# source control slang: fnm_tracking;  branches;
+# fnm can be untracked, modified, staged/unstaged (marked for commit and copied to "staging area"), commited='create repo snapshot with comment';
+# working_dir,staging_area/"index" (fnm with list for next commit),.git dir (db with snapshots)
 #--- other
 import getopt,argparse; sys.argv; # cmd_line_args stored in a list sys.argv; processes sys.argv like Unix getopt(); argparse more powerful
 sys.stderr.write('warn1\n'); sys.exit() # to terminate a script; sys module also has attributes for stdin,stdout,and stderr (can redirect stderr and make err msg visible)

@@ -38,7 +38,7 @@ if 0:
   # T,F=True,False; ### want -Qwarn flag on startup
 #------------------------------------
 print 'vm0_ver1.4'; # to see if annoying caching
-import os,inspect,subprocess,signal,datetime; import sys,uuid,shutil
+import os,inspect,subprocess,signal,datetime; import sys,uuid,shutil,random,string
 import numpy as np, pandas as pd, matplotlib as mpl, matplotlib.pyplot as plt; # kills sys.exc_info()
 #--- 00 ---------------------------------------------------------------------------------------------------------------
 def mm(A,B): # need to use -1; problem for [[1,2,3]]

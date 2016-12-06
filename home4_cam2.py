@@ -76,6 +76,11 @@ for o in mdir1(dir1+'*.mov'): vid_merge(o,dir2+os.path.split(o)[1][:-4]+'.mp4','
 
 o=mdir1(dir1+'20*.*'); vid_merge(o,dir2+os.path.split(o[0])[1][:-4]+'.mp4','-c:v copy -c:a copy') # merge videos
 
+dir1=r'M:/mov2/music_classic/Mozart/2005_Great.Piano.Concertos/';
+for o in glob.glob(dir1+'*.flac'): vid_merge(o,dir1+os.path.split(o)[1][:-5].replace('._','_')+'.mp4',' -c:a libfdk_aac -b:a 256k')
+
+vid_merge(glob.glob(dir1+'*.avi'),dir1+'act_.avi','-c:v copy -c:a copy')
+
 # dir1=dir0+'avi_broken/';
 # fd=open(dir1+'a.avi','rb'); o=fd.read(1024*32); fd.close(); fd=open(dir1+'20140524_160021_07_cam2.avi','rb'); q=fd.read(); fd.close(); fd=open(dir1+'aa.avi','wb'); fd.write(o); fd.write(q); fd.close();
 
